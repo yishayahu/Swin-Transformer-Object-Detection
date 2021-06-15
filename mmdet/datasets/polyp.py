@@ -6,7 +6,7 @@ import numpy as np
 
 from .builder import DATASETS
 from .custom import CustomDataset
-
+import random
 
 @DATASETS.register_module()
 class PolypDataset(CustomDataset):
@@ -14,7 +14,12 @@ class PolypDataset(CustomDataset):
     CLASSES = ['polyp']
 
     def load_annotations(self, ann_file):
-        return pickle.load(open(ann_file,'rb'))
+        if 'val_for_mmdet' in ann_file:
+            d=  pickle.load(open(ann_file,'rb'))
+            random.shuffle(d)
+            return d[:2000]
+        else:
+            return pickle.load(open(ann_file, 'rb'))
 
 
     def get_ann_info(self, idx):

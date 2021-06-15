@@ -45,4 +45,4 @@ data = dict(
         ann_file=data_root + 'annotations/val_for_mmdet.p',
         img_prefix=data_root ,
         pipeline=test_pipeline))
-evaluation = dict(metric=['bbox'])
+evaluation = dict(interval=10000, metric=['recall'])
