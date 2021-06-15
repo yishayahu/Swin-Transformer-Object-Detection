@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 
 # from mmdet.core import bbox2result, bbox2roi, build_assigner, build_sampler
+from mmcv_custom import load_checkpoint
 from ..builder import DETECTORS, build_backbone, build_head, build_neck
 from .base import BaseDetector
 
@@ -65,17 +66,21 @@ class TwoStageDetector(BaseDetector):
                 Defaults to None.
         """
         super(TwoStageDetector, self).init_weights(pretrained)
-        self.backbone.init_weights(pretrained=pretrained)
+        self.backbone.init_weights(pretrained=pretrained.replace('.pth','_backbone.pth'))
         if self.with_neck:
             if isinstance(self.neck, nn.Sequential):
                 for m in self.neck:
                     m.init_weights()
             else:
                 self.neck.init_weights()
+                load_checkpoint(self.neck, pretrained.replace('.pth','_neck.pth'), strict=False)
         if self.with_rpn:
             self.rpn_head.init_weights()
+            load_checkpoint(self.rpn_head, pretrained.replace('.pth', '_rpn_head.pth'), strict=False)
         if self.with_roi_head:
             self.roi_head.init_weights(pretrained)
+            load_checkpoint(self.roi_head, pretrained.replace('.pth', '_roi_head.pth'), strict=False)
+
 
     def extract_feat(self, img):
         """Directly extract features from the backbone+neck."""

@@ -8,6 +8,7 @@ from torch.utils.data.dataset import ConcatDataset as _ConcatDataset
 
 from .builder import DATASETS
 from .coco import CocoDataset
+from .polyp import PolypDataset
 
 
 @DATASETS.register_module()
