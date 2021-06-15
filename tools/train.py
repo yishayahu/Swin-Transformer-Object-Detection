@@ -184,5 +184,5 @@ def main():
 
 
 if __name__ == '__main__':
-    os.chdir('/home/ec2-user/shaya/Swin-Transformer-Object-Detection/')
+    os.chdir('/home/user/shaya/Swin-Transformer-Object-Detection/')
     main()
