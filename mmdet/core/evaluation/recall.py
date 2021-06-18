@@ -82,7 +82,7 @@ def eval_recalls(gts,
 
     img_num = len(gts)
     assert img_num == len(proposals)
-
+    proposals = [x[0] for x in proposals]
     proposal_nums, iou_thrs = set_recall_param(proposal_nums, iou_thrs)
 
     all_ious = []
